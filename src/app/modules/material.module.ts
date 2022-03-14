@@ -4,6 +4,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [],
@@ -12,13 +15,19 @@ import { MatIconModule } from '@angular/material/icon';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule
   ],
   exports: [
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule
   ]
 })
 export class MaterialModule { }

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-search.component.scss']
 })
 export class GameSearchComponent implements OnInit {
+  searchText: string | undefined;
 
   constructor() { }
 
