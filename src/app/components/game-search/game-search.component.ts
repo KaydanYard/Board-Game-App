@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Game } from 'src/app/interfaces/game';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-game-search',
@@ -6,11 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-search.component.scss']
 })
 export class GameSearchComponent implements OnInit {
-  searchText: string | undefined;
+  searchText: string;
+  games: Game[] = [];
 
-  constructor() { }
+  constructor(
+    private gameService: GameService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  search() {
+    this.gameService.searchByName(this.searchText).subscribe(games => this.games = games)
   }
 
 }
