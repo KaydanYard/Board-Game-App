@@ -18,5 +18,11 @@ export class GameService {
     return this.http.get<Game[]>(`https://api.boardgameatlas.com/api/search?name=${alteredText}&client_id=${environment.boardgameAPI}`).pipe(
       map(response => response['games'])
     )
-  };
+  }
+
+  getById(gameId: string): Observable<Game> {
+    return this.http.get<Game>(`https://api.boardgameatlas.com/api/search?ids=${gameId}&client_id=${environment.boardgameAPI}`).pipe(
+      map(response => response['games'])
+    )
+  }
 }
