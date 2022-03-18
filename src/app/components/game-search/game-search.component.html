@@ -5,6 +5,7 @@
     </mat-form-field>
 
     <button mat-raised-button color="primary" (click)="search()">Search</button>
+    <mat-checkbox [(ngModel)]="random">Enable Random Search?</mat-checkbox>
   </div>
 
   <div class="searched-games">
@@ -20,10 +21,10 @@
       </mat-card-content>
       <mat-card-actions>
         <button mat-mini-fab color="primary" matTooltip="Add to list of owned games"
-          (click)="updateOwnedList($event, game)">
+          (click)="updateList($event, game, 0)">
           <mat-icon class="material-icons-outlined">verified</mat-icon>
         </button>
-        <button mat-mini-fab matTooltip="Add to wishlist" (click)="updateWishlist($event, game)">
+        <button mat-mini-fab matTooltip="Add to wishlist" (click)="updateList($event, game, 1)">
           <mat-icon>switch_access_shortcut</mat-icon>
         </button>
       </mat-card-actions>

@@ -1,9 +1,9 @@
+import * as _ from 'lodash';
 import { Component, OnInit } from '@angular/core';
-import { ListType } from 'src/app/enums/list-type';
 import { Game } from 'src/app/interfaces/game';
 import { GameService } from 'src/app/services/game.service';
+import { ListType } from 'src/app/enums/list-type';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import * as _ from 'lodash';
 import { Router } from '@angular/router';
 
 
@@ -17,6 +17,7 @@ export class GameSearchComponent implements OnInit {
   games: Game[] = [];
   ownedGames: { [id: string]: Game } = {};
   wishListGames: { [id: string]: Game } = {};
+  random = false;
 
   constructor(
     private router: Router,
@@ -34,32 +35,38 @@ export class GameSearchComponent implements OnInit {
   }
 
   search() {
-    this.gameService.searchByName(this.searchText).subscribe(games => this.games = games)
-  }
-
-  updateOwnedList(event: MouseEvent, game: Game) {
-    event.stopPropagation();
-
-    if (this.ownedGames[game.id]) {
-      this.localStorageService.deleteGame(game, ListType.OWNEDLIST);
+    if (this.random == true) {
+      this.gameService.getRandomGame().subscribe(games => this.games = games)
     } else {
-      if (this.wishListGames[game.id]) {
-        this.localStorageService.deleteGame(game, ListType.WISHLIST);
-      }
-      this.localStorageService.saveGame(game, ListType.OWNEDLIST);
+      this.gameService.searchByName(this.searchText).subscribe(games => this.games = games)
     }
   }
 
-  updateWishlist(event: MouseEvent, game: Game) {
+  updateList(event: MouseEvent, game: Game, listTyper: number) {
     event.stopPropagation();
 
-    if (this.wishListGames[game.id]) {
-      this.localStorageService.deleteGame(game, ListType.WISHLIST);
-    } else {
+    if (listTyper == 0) {
+      // Updates Owned Games
       if (this.ownedGames[game.id]) {
         this.localStorageService.deleteGame(game, ListType.OWNEDLIST);
+      } else {
+        if (this.wishListGames[game.id]) {
+          this.localStorageService.deleteGame(game, ListType.WISHLIST);
+        }
+        this.localStorageService.saveGame(game, ListType.OWNEDLIST);
       }
-      this.localStorageService.saveGame(game, ListType.WISHLIST);
+    } else if (listTyper == 1) {
+      // Updates Wished Games
+      if (this.wishListGames[game.id]) {
+        this.localStorageService.deleteGame(game, ListType.WISHLIST);
+      } else {
+        if (this.ownedGames[game.id]) {
+          this.localStorageService.deleteGame(game, ListType.OWNEDLIST);
+        }
+        this.localStorageService.saveGame(game, ListType.WISHLIST);
+      }
+    } else {
+      return undefined;
     }
   }
 

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
-import { ListType } from 'src/app/enums/list-type';
+import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/app/interfaces/game';
 import { GameService } from 'src/app/services/game.service';
+import { ListType } from 'src/app/enums/list-type';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import * as _ from 'lodash';
+import { switchMap, tap } from 'rxjs';
 
 
 @Component({
