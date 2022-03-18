@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Game } from 'src/app/interfaces/game';
 import { GameService } from 'src/app/services/game.service';
 import { ListType } from 'src/app/enums/list-type';
@@ -13,7 +13,7 @@ import { switchMap, tap } from 'rxjs';
   templateUrl: './game-details.component.html',
   styleUrls: ['./game-details.component.scss']
 })
-export class GameDetailsComponent implements OnInit {
+export class GameDetailsComponent implements OnInit, OnDestroy {
   game: Game;
   ownedGames: { [id: string]: Game } = {};
   wishListGames: { [id: string]: Game } = {};
@@ -37,6 +37,11 @@ export class GameDetailsComponent implements OnInit {
 
     this.localStorageService.ownedGames.subscribe(games => this.ownedGames = _.mapKeys(games, 'id'));
     this.localStorageService.wishListGames.subscribe(games => this.wishListGames = _.mapKeys(games, 'id'));
+  }
+
+  ngOnDestroy(): void {
+    this.localStorageService.ownedGames.unsubscribe();
+    this.localStorageService.wishListGames.unsubscribe();
   }
 
   setGameList(listType: ListType) {
